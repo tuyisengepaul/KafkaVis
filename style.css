@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #e6e6e6;
+  margin: 0;
+}
+
+.title_background {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  padding: 5px;
+  column-gap: 30px;
+  flex-wrap: wrap;
+}
+
+.image {
+  height: 25px;
+}
+
+.title_text {
+  font-weight: bold;
+  font-size: 17;
+}
+
+.title_image_row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  column-gap: 3px;
+}
+
+.location_name {
+  color: #737373;
+}
+
+.location_row {
+  display: flex;
+  flex-direction: row;
+  column-gap: 5px;
+}
+
+.date_time_row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  column-gap: 5px;
+}
+
+.card_bg {
+  background-color: #ffffff;
+  padding: 40px;
+  margin-left: 0;
+  margin-right: 0;
+  width: 145px;
+  border-top-right-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+
+.temp_humidity {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  padding: 20px;
+  row-gap: 10px;
+  column-gap: 10px;
+  white-space: pre;
+}
+
+.display_row_center {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.numeric_value {
+  font-weight: bold;
+  font-size: 35px;
+  margin-top: -25px;
+}
+
+.temp_image_row {
+  display: flex;
+  flex-direction: row;
+}
+
+.symbol {
+  color: #737373;
+  margin-bottom: 10px;
+}
+
+.temp_symbol_column {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-top: -5px;
+}
