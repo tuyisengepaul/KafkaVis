@@ -49,7 +49,6 @@ def main():
     except KeyboardInterrupt:
         pass
     finally:
-        # producer.flush()
         print('Kafka producer flushed and closed.')
  
 if __name__ == '__main__':

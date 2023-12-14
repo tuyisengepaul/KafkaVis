@@ -78,6 +78,8 @@ def update_graph(n):
               Output('graph2', 'figure'),
               [Input('interval-comp', 'n_intervals')])
 def update_graph(n):
+    print("Updating graph...")
+    print("n_intervals: ", n)
     global UDPs, TCPs, DATA_SIZEs, TIMESTAMPS
     data = {
         'timestamp': TIMESTAMPS,
@@ -89,12 +91,15 @@ def update_graph(n):
     df["date"] = pd.to_datetime(df["timestamp"])
     fig = px.line(df, x='TCPs', y="UDPs")
     
-    fig2 = go.Figure(data=[go.Scatter(x=TCPs, y=UDPs)])
+    fig = px.line(df, x="datetime", y="DataSize", title='Data Size for UDPs and TCPs')
+    fig.add_scatter(x=df["date"], y=df["UDPs"], mode='lines', name='UDP')
+    fig.add_scatter(x=df["date"], y=df["TCPs"], mode='lines', name='TCP')
+    
     total_count = len(set(TCPs + UDPs))
     figure = {
         'data': [
-            {'x': list(range(0, total_count + 1)), 'y': TCPs[-10:], 'type': 'bar', 'name': 'TCPs'},
-            {'x': list(range(0, total_count + 1)), 'y': UDPs[-10:], 'type': 'bar', 'name': 'UPDs'},
+            {'x':  total_count , 'y': TCPs[-10:], 'type': 'bar', 'name': 'TCPs'},
+            {'x':  total_count , 'y': UDPs[-10:], 'type': 'bar', 'name': 'UPDs'},
         ],
         'layout': {
             'title': 'Last Ten TCPs and UDPs'
