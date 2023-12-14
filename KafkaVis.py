@@ -20,6 +20,7 @@ TCP_DATA_SIZEs = []
 COUNTER = []
 
 app = dash.Dash(__name__)
+app.title = 'KafkaVis'
 print("Dash application initialized...")
 
 topic = 'network-events'
@@ -96,10 +97,7 @@ def update_graph(n):
         'TCPDataSize': TCP_DATA_SIZEs
         }
     df = pd.DataFrame(data)
-    
     df["DateTime"] = pd.to_datetime(df["timestamp"])
-    print( df["DateTime"])
-    # Create a line chart for life expectancy and GDP per Capita
     df_last_20 = df.tail(20)
 
     # Create a line chart for the last 20 data points
@@ -125,5 +123,5 @@ def update_graph(n):
 
 # Run the app
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=True, port=8050)
 
