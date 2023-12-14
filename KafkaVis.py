@@ -8,6 +8,7 @@ from dash.dependencies import Input, Output
 import plotly.graph_objs as go
 import plotly.express as px
 import pandas as pd
+import dash_bootstrap_components as dbc
 
 # Initialize Dash application
 EVENTS = []
@@ -19,8 +20,10 @@ UDP_DATA_SIZEs = []
 TCP_DATA_SIZEs = []
 COUNTER = []
 
-app = dash.Dash(__name__)
+
+app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
 app.title = 'KafkaVis'
+
 print("Dash application initialized...")
 
 topic = 'network-events'
@@ -53,17 +56,69 @@ def update_graph(n):
     udp_count, tcp_count, udp_data_size, tcp_data_size, counter = aggreate_data(EVENTS)
     if msg is None:
         print("No message received")
-        return html.Div([
-            html.P(f"UDP Count: {udp_count} -- TCP Count: {tcp_count}", style={'color': '#666666'}),
-            html.P(f"UDP Data Size: {udp_data_size}  -- TCP Data Size: {tcp_data_size}", style={'color': '#666666'})
-        ])
+        count_card = dbc.Card(
+            dbc.CardBody(
+                [
+                    html.H3("Traffic count", className="card-title"),
+                    html.P(f"UDP Count: {udp_count}"),
+                    html.P(f"TCP Count: {tcp_count}"),
+                ]
+            ),
+            color="primary",
+            inverse=True,
+        )
+
+        size_card = dbc.Card(
+            dbc.CardBody(
+                [
+                    html.H3("Traffic size", className="card-title"),
+                    html.P(f"UDP Data Size: {udp_data_size}"),
+                    html.P(f"TCP Data Size: {tcp_data_size}"),
+                ]
+            ),
+            color="success",
+            inverse=True,
+        )
+
+        return dbc.Row(
+            [
+                dbc.Col(count_card, width=4),
+                dbc.Col(size_card, width=4),
+            ], style={'display': 'flex', 'margin': 'auto', 'justifyContent': 'center', 'marginBottom': '40px', 'marginTop': '40px'}
+        )
 
     if msg.error():
         print(f"Error Message: {msg.error()}")
-        return html.Div([
-            html.P(f"UDP Count: {udp_count} -- TCP Count: {tcp_count}", style={'color': '#666666'}),
-            html.P(f"UDP Data Size: {udp_data_size}  -- TCP Data Size: {tcp_data_size}", style={'color': '#666666'})
-        ])
+        count_card = dbc.Card(
+            dbc.CardBody(
+                [
+                    html.H3("Traffic count", className="card-title"),
+                    html.P(f"UDP Count: {udp_count}"),
+                    html.P(f"TCP Count: {tcp_count}"),
+                ]
+            ),
+            color="primary",
+            inverse=True,
+        )
+
+        size_card = dbc.Card(
+            dbc.CardBody(
+                [
+                    html.H3("Traffic size", className="card-title"),
+                    html.P(f"UDP Data Size: {udp_data_size}"),
+                    html.P(f"TCP Data Size: {tcp_data_size}"),
+                ]
+            ),
+            color="success",
+            inverse=True,
+        )
+
+        return dbc.Row(
+            [
+                dbc.Col(count_card, width=4),
+                dbc.Col(size_card, width=4),
+            ], style={'display': 'flex', 'margin': 'auto', 'justifyContent': 'center', 'marginBottom': '40px', 'marginTop': '40px'}
+        )
 
     data = json.loads(msg.value())
     print("Data: ", data)
@@ -76,10 +131,36 @@ def update_graph(n):
     TCP_DATA_SIZEs.append(tcp_data_size)
     COUNTER.append(counter * 3)
 
-    return html.Div([
-        html.P(f"UDP Count: {udp_count} -- TCP Count: {tcp_count}", style={'color': '#666666'}),
-        html.P(f"UDP Data Size: {udp_data_size}  -- TCP Data Size: {tcp_data_size}", style={'color': '#666666'})
-    ])
+    count_card = dbc.Card(
+            dbc.CardBody(
+                [
+                    html.H3("Traffic count", className="card-title"),
+                    html.P(f"UDP Count: {udp_count}"),
+                    html.P(f"TCP Count: {tcp_count}"),
+                ]
+            ),
+            color="primary",
+            inverse=True,
+        )
+
+    size_card = dbc.Card(
+        dbc.CardBody(
+            [
+                html.H3("Traffic size", className="card-title"),
+                html.P(f"UDP Data Size: {udp_data_size}"),
+                html.P(f"TCP Data Size: {tcp_data_size}"),
+            ]
+        ),
+        color="success",
+        inverse=True,
+    )
+
+    return dbc.Row(
+            [
+                dbc.Col(count_card, width=4),
+                dbc.Col(size_card, width=4),
+            ], style={'display': 'flex', 'margin': 'auto', 'justifyContent': 'center', 'marginBottom': '40px', 'marginTop': '40px'}
+        )
     
 
 @app.callback(Output('live-graph_bar', 'figure'),
